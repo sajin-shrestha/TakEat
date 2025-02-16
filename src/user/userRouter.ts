@@ -1,5 +1,11 @@
 import express from 'express'
-import { createUser, getProfile, loginUser } from './userController'
+import {
+  createUser,
+  editProfile,
+  getProfile,
+  loginUser,
+} from './userController'
+import authMiddleware from '../middlewares/auth'
 
 const userRouter = express.Router()
 
@@ -37,8 +43,15 @@ const userRouter = express.Router()
  *             schema:
  *               type: object
  *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: number
  *                 message:
  *                   type: string
+ *                   example: "string"
+ *                 data:
+ *                   type: "null"
+ *                   example: null
  */
 userRouter.post('/register', createUser)
 
@@ -91,21 +104,35 @@ userRouter.post('/login', loginUser)
  *             schema:
  *               type: object
  *               properties:
- *                 user:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: number
+ *                 message:
+ *                   type: string
+ *                   example: "string"
+ *                 data:
  *                   type: object
  *                   properties:
- *                     id:
+ *                     _id:
  *                       type: string
- *                       example: string
+ *                       example: "string"
  *                     username:
  *                       type: string
- *                       example: 'string'
+ *                       example: "string"
  *                     email:
  *                       type: string
- *                       example: 'string'
+ *                       example: "string"
  *                     role:
- *                        type: string
- *                        example: string
+ *                       type: string
+ *                       example: "string"
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-02-16T07:06:06.295Z"
+ *                     updatedAt:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2025-02-16T07:14:49.430Z"
  *
  *     security:
  *       - bearerAuth: []
@@ -117,6 +144,59 @@ userRouter.post('/login', loginUser)
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-userRouter.get('/profile', getProfile)
+userRouter.get('/profile', authMiddleware, getProfile)
+
+/**
+ * @swagger
+ * /api/users/profile:
+ *   patch:
+ *     tags:
+ *       - Users
+ *     description: Allows the authenticated user to update their username. Only the owner can edit their own username.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: 'newUsername'
+ *             required:
+ *               - username
+ *     responses:
+ *       200:
+ *         description: Username updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 statusCode:
+ *                   type: integer
+ *                   example: number
+ *                 message:
+ *                   type: string
+ *                   example: 'Username updated successfully'
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: 'string'
+ *                     username:
+ *                       type: string
+ *                       example: 'string'
+ *                     email:
+ *                       type: string
+ *                       example: 'string'
+ *                     role:
+ *                       type: string
+ *                       example: 'string'
+ *     security:
+ *       - bearerAuth: []
+ */
+userRouter.patch('/profile', authMiddleware, editProfile)
 
 export default userRouter
