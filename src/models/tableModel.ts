@@ -9,13 +9,12 @@ const tableSchema = new mongoose.Schema<ITable>(
     },
     status: {
       type: String,
-      enum: {
-        values: ["available", "occupied"],
-      },
+      enum: ["available", "occupied"],
       default: "available",
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model<ITable>("Table", tableSchema);
+export const TableModel = mongoose.model<ITable>("Table", tableSchema);

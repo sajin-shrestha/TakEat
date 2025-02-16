@@ -5,10 +5,9 @@ import {
   getAllTables,
   updateTable,
 } from "../controllers/tableController";
+import authMiddleware from "../middlewares/auth";
 
 const tableRouter = express.Router();
-
-tableRouter.get("/", getAllTables);
 /**
  * @swagger
  * /api/tables:
@@ -42,7 +41,8 @@ tableRouter.get("/", getAllTables);
  *       500:
  *         description: Failed to retrieve tables
  */
-tableRouter.post("/", createTable);
+tableRouter.get("/", getAllTables);
+
 /**
  * @swagger
  * /api/tables:
@@ -70,7 +70,8 @@ tableRouter.post("/", createTable);
  *       500:
  *         description: Failed to create table
  */
-tableRouter.patch("/:id", updateTable);
+tableRouter.post("/", authMiddleware, createTable);
+
 /**
  * @swagger
  * /api/tables/{id}:
@@ -105,7 +106,8 @@ tableRouter.patch("/:id", updateTable);
  *       500:
  *         description: Failed to update table
  */
-tableRouter.delete("/:id", deleteTable);
+tableRouter.patch("/:id", authMiddleware, updateTable);
+
 /**
  * @swagger
  * /api/tables/{id}:
@@ -128,4 +130,6 @@ tableRouter.delete("/:id", deleteTable);
  *       500:
  *         description: Failed to delete table
  */
+tableRouter.delete("/:id", authMiddleware, deleteTable);
+
 export default tableRouter;

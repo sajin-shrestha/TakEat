@@ -39,7 +39,7 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "API documentation for the TakEat : cafe-admin backend",
     },
-    servers: [{ url: 'https://takeat.vercel.app' }],
+    servers: [{ url: "https://takeat.vercel.app" }],
   },
   apis: [
     process.env.NODE_ENV === "production"
