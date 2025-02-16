@@ -1,13 +1,13 @@
-import express from 'express'
+import express from "express";
 import {
   createUser,
   editProfile,
   getProfile,
   loginUser,
-} from './userController'
-import authMiddleware from '../middlewares/auth'
+} from "../user/userController";
+import authMiddleware from "../middlewares/auth";
 
-const userRouter = express.Router()
+const userRouter = express.Router();
 
 /**
  * @swagger
@@ -53,7 +53,7 @@ const userRouter = express.Router()
  *                   type: "null"
  *                   example: null
  */
-userRouter.post('/register', createUser)
+userRouter.post("/register", createUser);
 
 /**
  * @swagger
@@ -88,7 +88,7 @@ userRouter.post('/register', createUser)
  *                 accessToken:
  *                   type: string
  */
-userRouter.post('/login', loginUser)
+userRouter.post("/login", loginUser);
 
 /**
  * @swagger
@@ -144,7 +144,7 @@ userRouter.post('/login', loginUser)
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-userRouter.get('/profile', authMiddleware, getProfile)
+userRouter.get("/profile", authMiddleware, getProfile);
 
 /**
  * @swagger
@@ -197,6 +197,6 @@ userRouter.get('/profile', authMiddleware, getProfile)
  *     security:
  *       - bearerAuth: []
  */
-userRouter.patch('/profile', authMiddleware, editProfile)
+userRouter.patch("/profile", authMiddleware, editProfile);
 
-export default userRouter
+export default userRouter;
