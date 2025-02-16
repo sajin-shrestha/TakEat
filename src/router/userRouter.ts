@@ -1,7 +1,11 @@
-import express from 'express'
-import { createUser, getProfile, loginUser } from './userController'
+import express from "express";
+import {
+  createUser,
+  getProfile,
+  loginUser,
+} from "../controllers/userController";
 
-const userRouter = express.Router()
+const userRouter = express.Router();
 
 /**
  * @swagger
@@ -40,7 +44,7 @@ const userRouter = express.Router()
  *                 message:
  *                   type: string
  */
-userRouter.post('/register', createUser)
+userRouter.post("/register", createUser);
 
 /**
  * @swagger
@@ -75,7 +79,7 @@ userRouter.post('/register', createUser)
  *                 accessToken:
  *                   type: string
  */
-userRouter.post('/login', loginUser)
+userRouter.post("/login", loginUser);
 
 /**
  * @swagger
@@ -117,6 +121,6 @@ userRouter.post('/login', loginUser)
  *       scheme: bearer
  *       bearerFormat: JWT
  */
-userRouter.get('/profile', getProfile)
+userRouter.get("/profile", getProfile);
 
-export default userRouter
+export default userRouter;

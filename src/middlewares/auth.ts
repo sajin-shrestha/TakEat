@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import createHttpError from 'http-errors'
 import { JwtPayload } from 'jsonwebtoken'
 import { verifyToken } from '../utils/token'
-import { IUser } from '../user/userTypes'
+import { IUser } from '../types/userTypes'
 
 interface AuthenticatedRequest extends Request {
   user?: IUser
