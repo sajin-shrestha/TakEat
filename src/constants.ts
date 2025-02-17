@@ -10,3 +10,5 @@ export const HttpStatusCodes = {
   UNSUPPROTED_MEDIA_TYPE: 415,
   INTERNAL_SERVER_ERROR: 500,
 } as const
+
+export const MONGOOSE_VALIDATION_ERROR = 'ValidationError'
