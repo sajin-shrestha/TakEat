@@ -13,6 +13,9 @@ const createTable = async (
   res: Response,
   next: NextFunction
 ) => {
+  if (!req.user)
+    return next(createHttpError(HttpStatusCodes.NOT_FOUND, 'User Not Found'))
+
   const { tablename } = req.body
   if (!tablename) {
     return next(
@@ -74,7 +77,14 @@ const getAllTables = async (
   }
 }
 
-const updateTable = async (req: Request, res: Response, next: NextFunction) => {
+const updateTable = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user)
+    return next(createHttpError(HttpStatusCodes.NOT_FOUND, 'User Not Found'))
+
   const { id } = req.params
   const updates = req.body
 
@@ -102,7 +112,14 @@ const updateTable = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-const deleteTable = async (req: Request, res: Response, next: NextFunction) => {
+const deleteTable = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.user)
+    return next(createHttpError(HttpStatusCodes.NOT_FOUND, 'User Not Found'))
+
   const { id } = req.params
   try {
     const deletedTable = await TableModel.findByIdAndDelete(id)
