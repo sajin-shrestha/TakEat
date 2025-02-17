@@ -2,7 +2,7 @@ import { Request } from 'express'
 
 const createFilter = (
   req: Request,
-  allowedFields: string[],
+  allowedFields: string[]
 ): Record<string, any> => {
   let filter: Record<string, any> = {}
 

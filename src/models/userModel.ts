@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { IUser } from "../types/userTypes";
+import mongoose from 'mongoose'
+import { IUser } from '../types/userTypes'
 
 const userSchema = new mongoose.Schema<IUser>(
   {
@@ -19,13 +19,13 @@ const userSchema = new mongoose.Schema<IUser>(
     role: {
       type: String,
       enum: {
-        values: ["user", "admin"],
-        message: "{VALUE} is not a valid role",
+        values: ['user', 'admin'],
+        message: '{VALUE} is not a valid role',
       },
-      default: "user",
+      default: 'user',
     },
   },
   { timestamps: true }
-);
+)
 
-export const UserModel = mongoose.model<IUser>("User", userSchema);
+export const UserModel = mongoose.model<IUser>('User', userSchema)

@@ -13,7 +13,7 @@ class ResponseWithPagination<T> {
     total: number,
     prev: string | null,
     next: string | null,
-    data: T | null = null,
+    data: T | null = null
   ) {
     this.statusCode = statusCode
     this.message = message
@@ -40,7 +40,7 @@ class ResponseWithPagination<T> {
     total: number,
     prev: string | null,
     next: string | null,
-    data: T | null = null,
+    data: T | null = null
   ): ResponseWithPagination<T> {
     return new ResponseWithPagination<T>(
       statusCode,
@@ -48,7 +48,7 @@ class ResponseWithPagination<T> {
       total,
       prev,
       next,
-      data,
+      data
     )
   }
 }
@@ -68,7 +68,7 @@ class SimpleResponse<T> {
   static success<T>(
     statusCode: number,
     message: string,
-    data: T | null = null,
+    data: T | null = null
   ): SimpleResponse<T> {
     return new SimpleResponse<T>(statusCode, message, data)
   }
@@ -83,7 +83,7 @@ class ErrorApiResponse {
   constructor(
     statusCode: number,
     message: string,
-    errorStack: string | null = null,
+    errorStack: string | null = null
   ) {
     this.statusCode = statusCode
     this.message = message
@@ -101,7 +101,7 @@ class ErrorApiResponse {
   static error(
     statusCode: number,
     message: string,
-    errorStack: string | null = null,
+    errorStack: string | null = null
   ): ErrorApiResponse {
     return new ErrorApiResponse(statusCode, message, errorStack)
   }

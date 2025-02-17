@@ -1,7 +1,7 @@
-export type TableStatus = "available" | "occupied";
+import { Document } from 'mongoose'
 
-export interface ITable {
-  _id: string;
-  tablename: string;
-  status: TableStatus;
+export interface ITable extends Document {
+  _id: string
+  tablename: string
+  status: 'available' | 'occupied'
 }

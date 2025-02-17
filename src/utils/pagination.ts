@@ -1,3 +1,4 @@
+import { Request } from 'express'
 import { Document, Model } from 'mongoose'
 
 interface IPaginationResultParams<T> {
@@ -8,11 +9,12 @@ interface IPaginationResultParams<T> {
 }
 
 export const pagination = async <T extends Document>(
+  req: Request,
   model: Model<T>,
-  filter: object,
-  page: number = 1,
-  limit: number = 10,
+  filter: object
 ): Promise<IPaginationResultParams<T>> => {
+  const page = parseInt(req.query.page as string) || 1
+  const limit = parseInt(req.query.limit as string) || 10
   const skip = (page - 1) * limit
 
   const total_count = await model.countDocuments(filter)
