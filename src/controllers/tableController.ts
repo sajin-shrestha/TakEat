@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { AuthenticatedRequest } from '../middlewares/auth'
 import createHttpError from 'http-errors'
 import { HttpStatusCodes } from '../constants'
-import { SimpleResponse } from '../utils/ApiResponse'
+import { ResponseWithPagination, SimpleResponse } from '../utils/ApiResponse'
 import { pagination } from '../utils/pagination'
 import createFilter from '../utils/filter'
 import { TableModel } from '../models/tableModel'
@@ -52,12 +52,18 @@ const getAllTables = async (
     const { total_count, next_page_number, prev_page_number, data } =
       await pagination(req, TableModel, filter)
 
-    res.status(HttpStatusCodes.OK).json({
-      total_count,
-      next_page_number,
-      prev_page_number,
-      data,
-    })
+    res
+      .status(HttpStatusCodes.OK)
+      .json(
+        ResponseWithPagination.success(
+          HttpStatusCodes.OK,
+          'Table fetched successfully',
+          total_count,
+          prev_page_number,
+          next_page_number,
+          data
+        )
+      )
   } catch (error) {
     HandleError(error, next)
   }

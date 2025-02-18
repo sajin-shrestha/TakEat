@@ -5,7 +5,7 @@ const tableSchema = new mongoose.Schema<ITable>(
   {
     tablename: {
       type: String,
-      required: [true, 'Username is required'],
+      required: [true, 'Table name is required'],
     },
     status: {
       type: String,
