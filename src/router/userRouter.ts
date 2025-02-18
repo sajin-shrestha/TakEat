@@ -4,7 +4,7 @@ import {
   editProfile,
   getProfile,
   loginUser,
-} from './userController'
+} from '../controllers/userController'
 import authMiddleware from '../middlewares/auth'
 
 const userRouter = express.Router()

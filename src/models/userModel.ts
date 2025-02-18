@@ -1,6 +1,6 @@
 import mongoose, { CallbackError } from 'mongoose'
 import bcrypt from 'bcrypt'
-import { IUser } from './userTypes'
+import { IUser } from '../types/userTypes'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema<IUser>(
       default: 'user',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 )
 
 /**

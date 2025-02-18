@@ -7,15 +7,16 @@ import path from 'path'
 import morgan from 'morgan'
 
 import globalErrorHandler from './middlewares/globalErrorHandler'
-import userRouter from './user/userRouter'
+import userRouter from './router/userRouter'
 import logger from './config/logger'
+import tableRouter from './router/tableRouter'
 
 const app = express()
 
 app.use(
   morgan('tiny', {
     stream: { write: (message) => logger.info(message.trim()) },
-  }),
+  })
 )
 
 app.use(cors())
@@ -26,7 +27,7 @@ export const __swaggerDistPath = path.join(
   __dirname,
   '..',
   'node_modules',
-  'swagger-ui-dist',
+  'swagger-ui-dist'
 )
 
 // Swagger configuration
@@ -59,7 +60,7 @@ app.use(
     swaggerOptions: {
       url: '/docs/swagger.json',
     },
-  }),
+  })
 )
 
 // Routes
@@ -67,7 +68,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to TakEat - Your Personal Cafe-Admin Panel' })
 })
 app.use('/api/users', userRouter)
-
+app.use('/api/tables', tableRouter)
 // Global error-handler middleware
 app.use(globalErrorHandler)
 
