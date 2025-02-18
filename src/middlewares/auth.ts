@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import createHttpError from 'http-errors'
 import { verifyToken } from '../utils/token'
 import { HttpStatusCodes } from '../constants'
-import { UserModel } from '../user/userModel'
+import { UserModel } from '../models/userModel'
 
 export interface AuthenticatedRequest extends Request {
   user?: { id: string; role: string }
@@ -11,7 +11,7 @@ export interface AuthenticatedRequest extends Request {
 const authMiddleware = async (
   req: AuthenticatedRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const token = req.header('Authorization')
   if (!token)
