@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import createHttpError from 'http-errors'
 import bcrypt from 'bcrypt'
 
-import { UserModel } from './userModel'
+import { UserModel } from '../models/userModel'
 import { generateToken } from '../utils/token'
 import { AuthenticatedRequest } from '../middlewares/auth'
 import { HttpStatusCodes } from '../constants'
@@ -21,8 +21,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       return next(
         createHttpError(
           HttpStatusCodes.BAD_REQUEST,
-          'User already exists with this email',
-        ),
+          'User already exists with this email'
+        )
       )
     }
     await UserModel.create({ username, email, password })
@@ -32,8 +32,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       .json(
         SimpleResponse.success(
           HttpStatusCodes.CREATED,
-          'New user created successfully',
-        ),
+          'New user created successfully'
+        )
       )
   } catch (error) {
     HandleError(error, next)
@@ -50,14 +50,14 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     const user = await UserModel.findOne({ email })
     if (!user) {
       return next(
-        createHttpError(HttpStatusCodes.NOT_FOUND, 'User does not exist'),
+        createHttpError(HttpStatusCodes.NOT_FOUND, 'User does not exist')
       )
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (!isPasswordMatch) {
       return next(
-        createHttpError(HttpStatusCodes.BAD_REQUEST, 'Incorrect password'),
+        createHttpError(HttpStatusCodes.BAD_REQUEST, 'Incorrect password')
       )
     }
 
@@ -74,15 +74,15 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 const getProfile = async (
   req: AuthenticatedRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     if (!req.user)
       return next(
         createHttpError(
           HttpStatusCodes.INTERNAL_SERVER_ERROR,
-          'Error authenticating user',
-        ),
+          'Error authenticating user'
+        )
       )
 
     const user = await UserModel.findById(req.user.id).select('-password')
@@ -97,8 +97,8 @@ const getProfile = async (
         SimpleResponse.success(
           HttpStatusCodes.OK,
           'User Profile fetch success',
-          user,
-        ),
+          user
+        )
       )
   } catch (error) {
     HandleError(error, next)
@@ -111,14 +111,14 @@ const getProfile = async (
 const editProfile = async (
   req: AuthenticatedRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const { username } = req.body
   const userId = req.user?.id
 
   if (!userId) {
     return next(
-      createHttpError(HttpStatusCodes.UNAUTHORIZED, 'User not authenticated'),
+      createHttpError(HttpStatusCodes.UNAUTHORIZED, 'User not authenticated')
     )
   }
 
@@ -126,8 +126,8 @@ const editProfile = async (
     return next(
       createHttpError(
         HttpStatusCodes.BAD_REQUEST,
-        'Username is required to update',
-      ),
+        'Username is required to update'
+      )
     )
   }
 
@@ -143,8 +143,8 @@ const editProfile = async (
       return next(
         createHttpError(
           HttpStatusCodes.FORBIDDEN,
-          'You are not allowed to edit this profile',
-        ),
+          'You are not allowed to edit this profile'
+        )
       )
     }
 
@@ -158,8 +158,8 @@ const editProfile = async (
         SimpleResponse.success(
           HttpStatusCodes.OK,
           'Username updated successfully',
-          user,
-        ),
+          user
+        )
       )
   } catch (error) {
     HandleError(error, next)
